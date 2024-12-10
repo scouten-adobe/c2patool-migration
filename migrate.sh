@@ -20,7 +20,7 @@ for branch in $(git branch -r | grep -v '\->'); do
     fi
 done
 
-# Disconnect from GitHub remote to prevent inadventent push to old repo.
+# Disconnect from GitHub remote to prevent inadvertent push to old repo.
 git remote rm origin
 
 # Bot-created branches (i.e. dependabot) will be discarded. (Reason: GitHub will automatically re-create those PRs after migration.)
@@ -48,6 +48,7 @@ done
 
 # The root of the c2patool repo will be moved down a level and placed in a folder named cli.
 # The GitHub workflows will be exempted from this and will be separately merged into c2pa-rs's .github folder.
+# Fix broken links in c2patool's CHANGELOG.md which (incorrectly) point to c2pa-rs repo PRs.
 FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch \
     --tree-filter /Users/scouten/Projects/c2patool-migration/tree-filter.sh \
     --prune-empty \
@@ -56,7 +57,6 @@ FILTER_BRANCH_SQUELCH_WARNING=1 git filter-branch \
 # View resulting repo in SourceTree.
 open -a /Applications/SourceTree.app/ .
 
-# Fix broken links in c2patool's CHANGELOG.md which (incorrectly) point to c2pa-rs repo PRs.
 # Commit comments that reference issues in the c2patool repo will be rewritten to point to PRs and issues in the c2patool repo (i.e. the #xxx syntax will be rewritten to say content-auth/c2patool#xxx so that the existing discussion remains).
 echo "Not done yet"
 exit 1
