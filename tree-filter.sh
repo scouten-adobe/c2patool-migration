@@ -5,6 +5,10 @@ mkdir cli
 GLOBIGNORE="cli:.github:Cargo.lock"
 mv * cli
 
+if [ -f "cli/Cargo.lock" ]; then
+    mv cli/Cargo.lock .
+fi
+
 # Fix broken links in c2patool's CHANGELOG.md which (incorrectly) point to c2pa-rs repo PRs.
 if [ -f "cli/CHANGELOG.md" ]; then
     sed 's/#\([0-9]\{1,3\}\)/contentauth\/c2patool#\1/g' cli/CHANGELOG.md > cli/NEW-CHANGELOG.md
